@@ -1,12 +1,13 @@
 import React from 'react';
-import { Button, ButtonProps } from '@mui/material';
 import './App.css';
+import AppProvider from './Provider/AppProvider';
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
     return (
-        <div className="App">
-            <Button variant="text">Text</Button>
-        </div>
+        <AppProvider>
+            <AppRoutes />
+        </AppProvider>
     );
 }
 
