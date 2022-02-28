@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { fetchListProduct } from '../redux/productSlice';
 import { useSearchParams } from 'react-router-dom';
+import { DEFAULT_FETCH_LIMIT, DEFAULT_FETCH_PAGE } from '../../../config';
 
 export default function Products() {
     const dispatch = useAppDispatch();
@@ -13,18 +14,15 @@ export default function Products() {
     const _page = searchParams.get('_page');
     const _limit = searchParams.get('_limit');
 
-    const pagination = useMemo(() => {
-        return {
-            _page: Number(_page) || 1,
-            _limit: Number(_limit) || 10,
-        };
-    }, [_page, _limit]);
-
     console.log('listProduct', listProduct);
 
     useEffect(() => {
-        dispatch(fetchListProduct(pagination));
-    }, [pagination]);
+        const params = {
+            _page: Number(_page) || DEFAULT_FETCH_PAGE,
+            _limit: Number(_limit) || DEFAULT_FETCH_LIMIT,
+        };
+        dispatch(fetchListProduct(params));
+    }, [_page, _limit]);
 
     return (
         <>
