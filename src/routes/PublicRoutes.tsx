@@ -10,6 +10,7 @@ export default function PublicRoutes() {
         <Routes>
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );
