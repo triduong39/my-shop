@@ -5,6 +5,8 @@ import { useAppSelector } from '../../../hooks/useAppSelector';
 import { fetchListProduct } from '../redux/productSlice';
 import { useSearchParams } from 'react-router-dom';
 import { DEFAULT_FETCH_LIMIT, DEFAULT_FETCH_PAGE } from '../../../config';
+import TableProduct from '../components/TableProduct';
+import Layout from '../components/Layout';
 
 export default function Products() {
     const dispatch = useAppDispatch();
@@ -36,6 +38,9 @@ export default function Products() {
             >
                 click here
             </button>
+            <Layout>
+                <TableProduct />
+            </Layout>
         </>
     );
 }
