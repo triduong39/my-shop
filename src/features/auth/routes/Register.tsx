@@ -7,7 +7,7 @@ export default function Register() {
     const navigate = useNavigate();
     return (
         <Layout>
-            <RegisterForm onSuccess={() => navigate('/product/123')} />
+            <RegisterForm onSuccess={() => navigate('/products')} />
         </Layout>
     );
 }

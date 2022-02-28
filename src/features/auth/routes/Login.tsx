@@ -7,7 +7,7 @@ export default function Login() {
     const navigate = useNavigate();
     return (
         <Layout>
-            <LoginForm onSuccess={() => navigate('/product/123')} />
+            <LoginForm onSuccess={() => navigate('/products')} />
         </Layout>
     );
 }
