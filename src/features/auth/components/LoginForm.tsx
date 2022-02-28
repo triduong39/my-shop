@@ -80,7 +80,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
                     <Divider />
                     <Typography
                         component={Link}
-                        to="/pages/register/register3"
+                        to="/register"
                         variant="subtitle1"
                         sx={{ color: 'black', textDecoration: 'none', textAlign: 'center' }}
                     >

@@ -1,6 +1,7 @@
 import React from 'react';
 import { STORAGE_TOKEN } from '../config';
 import { loginWithEmailAndPassword } from '../features/auth/api/login';
+import { registerWithEmailAndPassword } from '../features/auth/api/register';
 import { UserResponse } from '../features/auth/types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import storage from '../utils/storage';
@@ -13,6 +14,7 @@ type authContextProps = {
     currentUser: string;
     signIn: (userName: string, password: string) => void;
     signOut: () => void;
+    registerUser: (userName: string, password: string) => void;
     isLogged: boolean;
     error: string;
 };
@@ -43,6 +45,15 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         setCurrentUser(response.access_token);
     }
 
+    async function registerUser(email: string, password: string) {
+        setError('');
+        const response = await registerWithEmailAndPassword({ email, password });
+        console.log(response);
+
+        handleUserResponse(response);
+        setCurrentUser(response.access_token);
+    }
+
     function signOut() {
         setError('');
         setCurrentUser('');
@@ -52,6 +63,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         currentUser,
         signIn,
         signOut,
+        registerUser,
         isLogged: Boolean(currentUser),
         error,
     };
