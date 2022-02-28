@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Typography } from '@mui/material';
+import { CircularProgress, Pagination, Stack } from '@mui/material';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { fetchListProduct } from '../redux/productSlice';
@@ -12,34 +12,46 @@ export default function Products() {
     const dispatch = useAppDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
     const listProduct = useAppSelector((state) => state.product.listProduct);
+    const status = useAppSelector((state) => state.product.status);
 
     const _page = searchParams.get('_page');
     const _limit = searchParams.get('_limit');
 
-    console.log('listProduct', listProduct);
+    const page = Number(_page) || DEFAULT_FETCH_PAGE;
+    const limit = Number(_limit) || DEFAULT_FETCH_LIMIT;
 
     useEffect(() => {
         const params = {
-            _page: Number(_page) || DEFAULT_FETCH_PAGE,
-            _limit: Number(_limit) || DEFAULT_FETCH_LIMIT,
+            _page: page,
+            _limit: limit,
         };
         dispatch(fetchListProduct(params));
     }, [_page, _limit]);
 
+    const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+        setSearchParams({ _page: value.toString(), _limit: limit.toString() });
+    };
+
     return (
         <>
-            <Typography variant="h3" component="h1" align="center" sx={{ mb: 3 }}>
-                Products bibam
-            </Typography>
-            <button
-                onClick={() => {
-                    setSearchParams({ _page: '1' });
-                }}
-            >
-                click here
-            </button>
-            <Layout>
-                <TableProduct />
+            <Layout sx={{ mt: 4 }}>
+                {status === 'loading' && (
+                    <Stack justifyContent="center" alignItems="center">
+                        <CircularProgress />
+                    </Stack>
+                )}
+                {status === 'success' && listProduct?.data && (
+                    <Stack alignItems={'flex-end'} spacing={3}>
+                        <TableProduct rows={listProduct.data} />
+                        <Pagination
+                            count={Math.ceil(listProduct.totalRows / limit)}
+                            defaultPage={listProduct.page}
+                            variant="outlined"
+                            shape="rounded"
+                            onChange={handleChangePage}
+                        />
+                    </Stack>
+                )}
             </Layout>
         </>
     );

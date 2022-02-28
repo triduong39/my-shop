@@ -1,6 +1,6 @@
 import { Pagination } from './../types/index';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ListProduct, ResponseListProduct, TodoState } from '../types';
+import { ListProduct, ResponseListProduct, ProductState } from '../types';
 
 const initListProduct: ListProduct = {
     data: [],
@@ -8,8 +8,9 @@ const initListProduct: ListProduct = {
     limit: 10,
     totalRows: 0,
 };
+
 // Define the initial state using that type
-const initialState: TodoState = {
+const initialState: ProductState = {
     status: 'idle',
     listProduct: initListProduct,
     productDetail: undefined,

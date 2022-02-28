@@ -1,18 +1,10 @@
 import React from 'react';
-import { Container } from '@mui/material';
-import { styled } from '@mui/system';
+import { Container, ContainerProps } from '@mui/material';
 
-const AppContainer = styled(Container)`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-`;
-
-type LayoutProps = {
-    children: React.ReactNode;
-};
-
-export default function Layout({ children }: LayoutProps) {
-    return <AppContainer maxWidth="lg">{children}</AppContainer>;
+export default function Layout({ children, ...props }: ContainerProps) {
+    return (
+        <Container maxWidth="lg" {...props}>
+            {children}
+        </Container>
+    );
 }

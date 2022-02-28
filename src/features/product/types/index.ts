@@ -17,7 +17,7 @@ export type ListProduct = {
     totalRows: number;
 };
 
-export type TodoState = {
+export type ProductState = {
     status: 'idle' | 'loading' | 'error' | 'success';
     listProduct?: ListProduct;
     productDetail?: Product;
