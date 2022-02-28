@@ -1,4 +1,7 @@
 export type AuthUser = {
-    userName: string;
-    password: string;
+    access_token: string;
+};
+
+export type UserResponse = {
+    access_token: string;
 };

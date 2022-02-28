@@ -1,14 +1,20 @@
 import React from 'react';
-import { AuthUser } from '../features/auth/types';
+import { STORAGE_TOKEN } from '../config';
+import { loginWithEmailAndPassword } from '../features/auth/api/login';
+import { registerWithEmailAndPassword } from '../features/auth/api/register';
+import { UserResponse } from '../features/auth/types';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import storage from '../utils/storage';
 
 type AuthProviderProps = {
     children: React.ReactNode;
 };
 
 type authContextProps = {
-    currentUser: AuthUser | null;
+    currentUser: string;
     signIn: (userName: string, password: string) => void;
     signOut: () => void;
+    registerUser: (userName: string, password: string) => void;
     isLogged: boolean;
     error: string;
 };
@@ -24,25 +30,40 @@ export function useAuth() {
 }
 
 // example state: { userName: 'tri', password: '123' }
+async function handleUserResponse({ access_token }: UserResponse) {
+    storage.setToken(access_token);
+}
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-    const [currentUser, setCurrentUser] = React.useState<AuthUser | null>(null);
+    const [currentUser, setCurrentUser] = useLocalStorage<string>(STORAGE_TOKEN, '');
     const [error, setError] = React.useState('');
 
-    function signIn(userName: string, password: string) {
+    async function signIn(email: string, password: string) {
         setError('');
-        setCurrentUser({ userName: userName, password: password });
+        const response = await loginWithEmailAndPassword({ email, password });
+        handleUserResponse(response);
+        setCurrentUser(response.access_token);
+    }
+
+    async function registerUser(email: string, password: string) {
+        setError('');
+        const response = await registerWithEmailAndPassword({ email, password });
+        console.log(response);
+
+        handleUserResponse(response);
+        setCurrentUser(response.access_token);
     }
 
     function signOut() {
         setError('');
-        setCurrentUser(null);
+        setCurrentUser('');
     }
 
     const value = {
         currentUser,
         signIn,
         signOut,
+        registerUser,
         isLogged: Boolean(currentUser),
         error,
     };
