@@ -10,11 +10,6 @@ export type Product = {
     categoryId: string;
 };
 
-export type Category = {
-    id: string;
-    name: string;
-};
-
 export type ListProduct = {
     data: Product[];
     page: number;

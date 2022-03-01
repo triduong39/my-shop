@@ -6,7 +6,7 @@ import { fetchCategoryProducts } from '../redux/productSlice';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { DEFAULT_FETCH_LIMIT, DEFAULT_FETCH_PAGE } from '../../../config';
 import TableProduct from '../components/TableProduct';
-import Layout from '../components/Layout';
+import Layout from '../../../components/Layout';
 
 export default function CategoryProducts() {
     const { categoryId } = useParams();
