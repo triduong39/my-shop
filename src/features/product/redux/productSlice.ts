@@ -93,6 +93,21 @@ const updateProductsReducer = {
     },
 };
 
+const deleteProductsReducer = {
+    deleteProduct: (state: ProductState, _action: PayloadAction<string>) => {
+        state.status = 'loading';
+        state.error = undefined;
+    },
+    deleteProductSuccess: (state: ProductState) => {
+        state.status = 'success';
+        state.error = undefined;
+    },
+    deleteProductFailed: (state: ProductState, action: PayloadAction<string>) => {
+        state.status = 'error';
+        state.error = action.payload;
+    },
+};
+
 export const productSlice = createSlice({
     name: 'product',
     initialState,
@@ -101,6 +116,7 @@ export const productSlice = createSlice({
         ...productDetailReducer,
         ...categoryProductsReducer,
         ...updateProductsReducer,
+        ...deleteProductsReducer,
     },
 });
 
@@ -120,6 +136,10 @@ export const {
     updateProduct,
     updateProductSuccess,
     updateProductFailed,
+
+    deleteProduct,
+    deleteProductSuccess,
+    deleteProductFailed,
 } = productSlice.actions;
 
 const productReducer = productSlice.reducer;
