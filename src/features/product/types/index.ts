@@ -30,9 +30,16 @@ export type ProductState = {
     error?: string;
 };
 
-export type Pagination = {
+export type listProductParams = {
+    categoryId: string;
     _page: number;
     _limit: number;
+};
+
+export type listProductRoute = {
+    category?: string;
+    _page?: string;
+    _limit?: string;
 };
 
 export type CategoryProductsPagination = {

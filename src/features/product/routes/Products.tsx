@@ -3,16 +3,16 @@ import { Alert, CircularProgress, Pagination, Stack } from '@mui/material';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { fetchListProduct } from '../redux/productSlice';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { DEFAULT_FETCH_LIMIT, DEFAULT_FETCH_PAGE } from '../../../config';
 import TableProduct from '../components/TableProduct';
 import Layout from '../../../components/Layout';
 import { fetchListCategory } from '../../category/redux/categorySlice';
 import ListCategory from '../components/ListCategory';
+import { listProductRoute } from '../types';
 
 export default function Products() {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
 
     const { listProduct, status: productStatus, error: productError } = useAppSelector((state) => state.product);
@@ -20,24 +20,42 @@ export default function Products() {
 
     const _page = searchParams.get('_page');
     const _limit = searchParams.get('_limit');
+    const category = searchParams.get('category');
 
     const page = Number(_page) || DEFAULT_FETCH_PAGE;
     const limit = Number(_limit) || DEFAULT_FETCH_LIMIT;
 
     useEffect(() => {
         const params = {
+            categoryId: category || '',
             _page: page,
             _limit: limit,
         };
         dispatch(fetchListProduct(params));
-    }, [_page, _limit]);
+    }, [category, _page, _limit]);
 
     useEffect(() => {
         dispatch(fetchListCategory());
     }, []);
 
     const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
-        setSearchParams({ _page: value.toString(), _limit: limit.toString() });
+        let params: listProductRoute = {
+            _page: value.toString(),
+        };
+        // if limit and category not exist then no need to put on params
+        if (limit != DEFAULT_FETCH_LIMIT) {
+            params = {
+                ...params,
+                _limit: limit.toString(),
+            };
+        }
+        if (category) {
+            params = {
+                ...params,
+                category: category,
+            };
+        }
+        setSearchParams(params);
     };
 
     if (productStatus === 'error' && productError) {
@@ -64,7 +82,9 @@ export default function Products() {
     }
 
     const handleItemClick = (categoryId: string) => {
-        navigate(`/categories/${categoryId}/products`);
+        setSearchParams({
+            category: categoryId,
+        });
     };
     // status === 'success' and listProduct.data has data
     return (
