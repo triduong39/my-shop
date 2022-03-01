@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { updateDataProduct } from '../api/updateDataProduct';
+import { updateProduct as updateDataProduct } from '../api/updateProduct';
 import { Product, UpdateProductProps } from '../types';
 import { updateProduct, updateProductSuccess, updateProductFailed } from './productSlice';
 
