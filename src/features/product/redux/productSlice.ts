@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ResponseListProduct, ProductState, CategoryProductsPagination, Pagination, Product } from '../types';
+import { ResponseListProduct, ProductState, listProductParams, Product, UpdateProductProps } from '../types';
 
 // Define the initial state using that type
 const initialState: ProductState = {
@@ -11,7 +11,7 @@ const initialState: ProductState = {
 };
 
 const listProductReducer = {
-    fetchListProduct: (state: ProductState, _action: PayloadAction<Pagination>) => {
+    fetchListProduct: (state: ProductState, _action: PayloadAction<listProductParams>) => {
         state.status = 'loading';
         state.error = undefined;
     },
@@ -49,23 +49,31 @@ const productDetailReducer = {
     },
 };
 
-const categoryProductsReducer = {
-    fetchCategoryProducts: (state: ProductState, _action: PayloadAction<CategoryProductsPagination>) => {
+const updateProductsReducer = {
+    updateProduct: (state: ProductState, _action: PayloadAction<UpdateProductProps>) => {
         state.status = 'loading';
         state.error = undefined;
     },
-    fetchCategoryProductsSuccess: (state: ProductState, action: PayloadAction<ResponseListProduct>) => {
+    updateProductSuccess: (state: ProductState, _action: PayloadAction<Product>) => {
         state.status = 'success';
         state.error = undefined;
-
-        state.categoryProducts = {
-            data: action.payload.data,
-            page: action.payload.pagination._page,
-            limit: action.payload.pagination._limit,
-            totalRows: action.payload.pagination._totalRows,
-        };
     },
-    fetchCategoryProductsFailed: (state: ProductState, action: PayloadAction<string>) => {
+    updateProductFailed: (state: ProductState, action: PayloadAction<string>) => {
+        state.status = 'error';
+        state.error = action.payload;
+    },
+};
+
+const deleteProductsReducer = {
+    deleteProduct: (state: ProductState, _action: PayloadAction<string>) => {
+        state.status = 'loading';
+        state.error = undefined;
+    },
+    deleteProductSuccess: (state: ProductState) => {
+        state.status = 'success';
+        state.error = undefined;
+    },
+    deleteProductFailed: (state: ProductState, action: PayloadAction<string>) => {
         state.status = 'error';
         state.error = action.payload;
     },
@@ -77,7 +85,8 @@ export const productSlice = createSlice({
     reducers: {
         ...listProductReducer,
         ...productDetailReducer,
-        ...categoryProductsReducer,
+        ...updateProductsReducer,
+        ...deleteProductsReducer,
     },
 });
 
@@ -90,9 +99,13 @@ export const {
     fetchListProductDetailSuccess,
     fetchListProductDetailFailed,
 
-    fetchCategoryProducts,
-    fetchCategoryProductsSuccess,
-    fetchCategoryProductsFailed,
+    updateProduct,
+    updateProductSuccess,
+    updateProductFailed,
+
+    deleteProduct,
+    deleteProductSuccess,
+    deleteProductFailed,
 } = productSlice.actions;
 
 const productReducer = productSlice.reducer;

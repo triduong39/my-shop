@@ -3,10 +3,10 @@ import { Grid, Stack, Typography, CircularProgress, Alert } from '@mui/material'
 import { useParams } from 'react-router-dom';
 import Layout from '../../../components/Layout';
 import { formatToVND } from '../../../utils';
-import ListImage from '../components/ListImage';
 import { fetchListProductDetail } from '../redux/productSlice';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
+import ProductImages from '../components/ProductImages';
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -42,7 +42,7 @@ export default function ProductDetail() {
         <Layout>
             <Grid container spacing={2} sx={{ mt: 3 }}>
                 <Grid item xs={6}>
-                    <ListImage images={images} />
+                    <ProductImages images={images} />
                 </Grid>
                 <Grid item xs={6}>
                     <Stack spacing={2}>

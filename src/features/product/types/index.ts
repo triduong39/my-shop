@@ -10,6 +10,11 @@ export type Product = {
     categoryId: string;
 };
 
+export type Category = {
+    id: string;
+    name: string;
+};
+
 export type ListProduct = {
     data: Product[];
     page: number;
@@ -25,9 +30,16 @@ export type ProductState = {
     error?: string;
 };
 
-export type Pagination = {
+export type listProductParams = {
+    categoryId: string;
     _page: number;
     _limit: number;
+};
+
+export type listProductRoute = {
+    category?: string;
+    _page?: string;
+    _limit?: string;
 };
 
 export type CategoryProductsPagination = {
@@ -43,4 +55,16 @@ export type ResponseListProduct = {
         _limit: number;
         _totalRows: number;
     };
+};
+
+export type UpdateProductProps = {
+    id?: number;
+    name?: string;
+    shortDescription?: string;
+    description?: string;
+    originalPrice?: number;
+    salePrice?: number;
+    images?: string[];
+    isFreeShip?: false;
+    categoryId?: string;
 };

@@ -9,10 +9,10 @@ type ListCategoryProps = {
 
 export default function ListCategory({ categories, handleItemClick }: ListCategoryProps) {
     return (
-        <Stack direction="row">
+        <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
             {categories.map((category) => (
                 <Button key={category.name} variant="contained" onClick={() => handleItemClick(category.id)}>
-                    Contained
+                    {category.name}
                 </Button>
             ))}
         </Stack>
