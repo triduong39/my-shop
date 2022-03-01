@@ -15,6 +15,7 @@ function* listProduct(action: PayloadAction<Pagination>) {
         yield put(fetchListProductFailed('Failed to fetch list product'));
     }
 }
-export default function* productSaga() {
+
+export default function* listProductSaga() {
     yield takeLatest(fetchListProduct.type, listProduct);
 }

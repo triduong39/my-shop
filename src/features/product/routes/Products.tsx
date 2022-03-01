@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { CircularProgress, Pagination, Stack } from '@mui/material';
+import { Alert, CircularProgress, Pagination, Stack } from '@mui/material';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { fetchListProduct } from '../redux/productSlice';
@@ -13,6 +13,7 @@ export default function Products() {
     const [searchParams, setSearchParams] = useSearchParams();
     const listProduct = useAppSelector((state) => state.product.listProduct);
     const status = useAppSelector((state) => state.product.status);
+    const error = useAppSelector((state) => state.product.error);
 
     const _page = searchParams.get('_page');
     const _limit = searchParams.get('_limit');
@@ -32,26 +33,34 @@ export default function Products() {
         setSearchParams({ _page: value.toString(), _limit: limit.toString() });
     };
 
+    if (status === 'error' && error) {
+        return <Alert severity="error">{error}</Alert>;
+    }
+
+    if (status === 'loading' || !listProduct?.data) {
+        return (
+            <Layout>
+                <Stack justifyContent="center" alignItems="center">
+                    <CircularProgress />
+                </Stack>
+            </Layout>
+        );
+    }
+
+    // status === 'success' and listProduct.data has data
     return (
         <>
             <Layout sx={{ mt: 4 }}>
-                {status === 'loading' && (
-                    <Stack justifyContent="center" alignItems="center">
-                        <CircularProgress />
-                    </Stack>
-                )}
-                {status === 'success' && listProduct?.data && (
-                    <Stack alignItems={'flex-end'} spacing={3}>
-                        <TableProduct rows={listProduct.data} />
-                        <Pagination
-                            count={Math.ceil(listProduct.totalRows / limit)}
-                            defaultPage={listProduct.page}
-                            variant="outlined"
-                            shape="rounded"
-                            onChange={handleChangePage}
-                        />
-                    </Stack>
-                )}
+                <Stack alignItems={'flex-end'} spacing={3}>
+                    <TableProduct rows={listProduct.data} />
+                    <Pagination
+                        count={Math.ceil(listProduct.totalRows / limit)}
+                        defaultPage={listProduct.page}
+                        variant="outlined"
+                        shape="rounded"
+                        onChange={handleChangePage}
+                    />
+                </Stack>
             </Layout>
         </>
     );

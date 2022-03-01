@@ -1,4 +1,4 @@
-import { Pagination } from './../types/index';
+import { Pagination, Product } from './../types/index';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ListProduct, ResponseListProduct, ProductState } from '../types';
 
@@ -40,10 +40,32 @@ export const productSlice = createSlice({
             state.status = 'error';
             state.error = action.payload;
         },
+
+        fetchListProductDetail: (state, _action: PayloadAction<string>) => {
+            state.status = 'loading';
+            state.error = undefined;
+        },
+        fetchListProductDetailSuccess: (state, action: PayloadAction<Product>) => {
+            state.status = 'success';
+            state.error = undefined;
+
+            state.productDetail = action.payload;
+        },
+        fetchListProductDetailFailed: (state, action: PayloadAction<string>) => {
+            state.status = 'error';
+            state.error = action.payload;
+        },
     },
 });
 
-export const { fetchListProduct, fetchListProductSuccess, fetchListProductFailed } = productSlice.actions;
+export const {
+    fetchListProduct,
+    fetchListProductSuccess,
+    fetchListProductFailed,
+    fetchListProductDetail,
+    fetchListProductDetailSuccess,
+    fetchListProductDetailFailed,
+} = productSlice.actions;
 
 const productReducer = productSlice.reducer;
 export default productReducer;

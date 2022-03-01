@@ -11,6 +11,7 @@ import { styled } from '@mui/system';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import { Product } from '../types';
 import { Link } from 'react-router-dom';
@@ -63,6 +64,11 @@ export default function TableProduct({ rows }: TableProductProps) {
                             <TableCell align="right">{row.salePrice}</TableCell>
                             <TableCell align="left">
                                 <Stack direction="row" spacing={2}>
+                                    <Link to={`${row.id}`}>
+                                        <IconButton aria-label="create" color="success">
+                                            <VisibilityIcon />
+                                        </IconButton>
+                                    </Link>
                                     <Link to={`edit/${row.id}`}>
                                         <IconButton aria-label="create" color="success">
                                             <CreateIcon />
