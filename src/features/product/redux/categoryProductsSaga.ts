@@ -13,7 +13,6 @@ function* categoryProducts(action: PayloadAction<CategoryProductsPagination>) {
         const response: ResponseListProduct = yield call(getCategoryProducts, action.payload.categoryId, params);
         yield put(fetchCategoryProductsSuccess(response));
     } catch (error) {
-        console.log(error);
         yield put(fetchCategoryProductsFailed(`Failed to fetch category ${action.payload}`));
     }
 }

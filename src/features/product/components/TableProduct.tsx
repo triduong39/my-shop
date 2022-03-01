@@ -64,17 +64,17 @@ export default function TableProduct({ rows }: TableProductProps) {
                             <TableCell align="right">{row.salePrice}</TableCell>
                             <TableCell align="left">
                                 <Stack direction="row" spacing={2}>
-                                    <Link to={`${row.id}`}>
+                                    <Link to={`/products/${row.id}`}>
                                         <IconButton aria-label="create" color="success">
                                             <VisibilityIcon />
                                         </IconButton>
                                     </Link>
-                                    <Link to={`edit/${row.id}`}>
+                                    <Link to={`/products/edit/${row.id}`}>
                                         <IconButton aria-label="create" color="success">
                                             <CreateIcon />
                                         </IconButton>
                                     </Link>
-                                    <Link to={`delete/${row.id}`}>
+                                    <Link to={`/products/delete/${row.id}`}>
                                         <IconButton aria-label="delete" color="error">
                                             <DeleteIcon />
                                         </IconButton>

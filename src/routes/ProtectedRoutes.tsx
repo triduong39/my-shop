@@ -16,7 +16,7 @@ export default function ProtectedRoutes() {
                 <Route path="products" element={<Products />} />
                 <Route path="products/:id" element={<ProductDetail />} />
                 <Route path="categories/" element={<Categories />} />
-                <Route path="category/:categoryId/products" element={<CategoryProducts />} />
+                <Route path="categories/:categoryId/products" element={<CategoryProducts />} />
 
                 <Route path="/" element={<Products />} />
                 <Route path="*" element={<NotFound />} />

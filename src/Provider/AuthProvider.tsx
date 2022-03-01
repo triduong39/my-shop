@@ -48,7 +48,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     async function registerUser(email: string, password: string) {
         setError('');
         const response = await registerWithEmailAndPassword({ email, password });
-        console.log(response);
 
         handleUserResponse(response);
         setCurrentUser(response.access_token);
