@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Stack } from '@mui/material';
 import { styled } from '@mui/system';
 
-const AppImgBig = styled('img')`
-    width: 350px;
-    height: 350px;
-    object-fit: cover;
-`;
 const AppImgSmall = styled('img')`
     width: 35px;
     height: 35px;
@@ -15,34 +10,60 @@ const AppImgSmall = styled('img')`
     cursor: pointer;
     border: 1px solid #00000000;
     transition: transform 0.3s;
+
     &.selected,
     :hover {
         border: 1px solid #fd4646bd;
         transform: scale(1.4);
     }
+
+    &.img-big {
+        width: 75px;
+        height: 75px;
+    }
+
+    &.img-no-hover {
+        border: 1px solid #00000000;
+        transform: scale(1);
+        cursor: unset;
+    }
 `;
 
 type ListImageProps = {
+    size?: 'md' | 'lg';
+    hover?: boolean;
     images: string[];
+    imageSelected?: number;
+    handleItemClick?: (index: number) => void;
 };
 
-export default function ListImage({ images }: ListImageProps) {
-    const [imageSelected, setImageSelected] = useState(0);
-
+export default function ListImage({
+    size = 'md',
+    hover = true,
+    images,
+    imageSelected,
+    handleItemClick,
+}: ListImageProps) {
+    const getClass = (index: number) => {
+        return [
+            size === 'lg' ? 'img-big' : '',
+            !hover ? 'img-no-hover' : '',
+            imageSelected === index ? 'selected' : '',
+        ].join(' ');
+    };
     return (
-        <Stack spacing={3} alignItems="center">
-            <AppImgBig src={images[imageSelected]} alt="123" />
-            <Stack direction="row" spacing={1}>
-                {images.map((image, index) => (
-                    <AppImgSmall
-                        key={index}
-                        src={image}
-                        className={imageSelected === index ? 'selected' : ''}
-                        alt="123"
-                        onClick={() => setImageSelected(index)}
-                    />
-                ))}
-            </Stack>
+        <Stack direction="row" spacing={1} justifyContent="center">
+            {images.map((image, index) => (
+                <AppImgSmall
+                    key={index}
+                    src={image}
+                    className={getClass(index)}
+                    alt={`image-${index}`}
+                    onClick={() => {
+                        handleItemClick && handleItemClick(index);
+                    }}
+                />
+            ))}
         </Stack>
     );
 }

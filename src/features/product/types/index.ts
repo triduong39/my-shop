@@ -49,3 +49,15 @@ export type ResponseListProduct = {
         _totalRows: number;
     };
 };
+
+export type UpdateProductProps = {
+    id?: number;
+    name?: string;
+    shortDescription?: string;
+    description?: string;
+    originalPrice?: number;
+    salePrice?: number;
+    images?: string[];
+    isFreeShip?: false;
+    categoryId?: string;
+};

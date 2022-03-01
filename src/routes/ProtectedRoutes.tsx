@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import ResponsiveAppBar from '../components/ResponsiveAppBar';
 import Categories from '../features/category/routes/Categories';
 import CategoryProducts from '../features/product/routes/CategoryProducts';
+import EditProduct from '../features/product/routes/EditProduct';
 import Products from '../features/product/routes/Products';
 import NotFound from './NotFound';
 
@@ -15,6 +16,8 @@ export default function ProtectedRoutes() {
             <Routes>
                 <Route path="products" element={<Products />} />
                 <Route path="products/:id" element={<ProductDetail />} />
+                <Route path="products/edit/:id" element={<EditProduct />} />
+
                 <Route path="categories/" element={<Categories />} />
                 <Route path="categories/:categoryId/products" element={<CategoryProducts />} />
 
