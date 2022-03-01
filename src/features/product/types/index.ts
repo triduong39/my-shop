@@ -10,6 +10,11 @@ export type Product = {
     categoryId: string;
 };
 
+export type Category = {
+    id: string;
+    name: string;
+};
+
 export type ListProduct = {
     data: Product[];
     page: number;
@@ -20,11 +25,18 @@ export type ListProduct = {
 export type ProductState = {
     status: 'idle' | 'loading' | 'error' | 'success';
     listProduct?: ListProduct;
+    categoryProducts?: ListProduct;
     productDetail?: Product;
     error?: string;
 };
 
 export type Pagination = {
+    _page: number;
+    _limit: number;
+};
+
+export type CategoryProductsPagination = {
+    categoryId: string;
     _page: number;
     _limit: number;
 };

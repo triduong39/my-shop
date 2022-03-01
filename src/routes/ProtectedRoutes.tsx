@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ResponsiveAppBar from '../components/ResponsiveAppBar';
+import CategoryProducts from '../features/product/routes/CategoryProducts';
 import Products from '../features/product/routes/Products';
 import NotFound from './NotFound';
 
@@ -13,6 +14,8 @@ export default function ProtectedRoutes() {
             <Routes>
                 <Route path="products" element={<Products />} />
                 <Route path="products/:id" element={<ProductDetail />} />
+                <Route path="category/:categoryId/products" element={<CategoryProducts />} />
+
                 <Route path="/" element={<Products />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
