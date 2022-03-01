@@ -3,17 +3,20 @@ import { Alert, CircularProgress, Pagination, Stack } from '@mui/material';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { fetchListProduct } from '../redux/productSlice';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { DEFAULT_FETCH_LIMIT, DEFAULT_FETCH_PAGE } from '../../../config';
 import TableProduct from '../components/TableProduct';
 import Layout from '../../../components/Layout';
+import { fetchListCategory } from '../../category/redux/categorySlice';
+import ListCategory from '../components/ListCategory';
 
 export default function Products() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
-    const listProduct = useAppSelector((state) => state.product.listProduct);
-    const status = useAppSelector((state) => state.product.status);
-    const error = useAppSelector((state) => state.product.error);
+
+    const { listProduct, status: productStatus, error: productError } = useAppSelector((state) => state.product);
+    const { listCategory, status: categoryStatus, error: categoryError } = useAppSelector((state) => state.category);
 
     const _page = searchParams.get('_page');
     const _limit = searchParams.get('_limit');
@@ -29,28 +32,45 @@ export default function Products() {
         dispatch(fetchListProduct(params));
     }, [_page, _limit]);
 
+    useEffect(() => {
+        dispatch(fetchListCategory());
+    }, []);
+
     const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         setSearchParams({ _page: value.toString(), _limit: limit.toString() });
     };
 
-    if (status === 'error' && error) {
-        return <Alert severity="error">{error}</Alert>;
+    if (productStatus === 'error' && productError) {
+        return <Alert severity="error">{productError}</Alert>;
+    }
+    if (categoryStatus === 'error' && categoryError) {
+        return <Alert severity="error">{categoryError}</Alert>;
     }
 
-    if (status === 'loading' || !listProduct?.data) {
-        return (
-            <Layout>
-                <Stack justifyContent="center" alignItems="center">
-                    <CircularProgress />
-                </Stack>
-            </Layout>
-        );
+    const renderLoading = (
+        <Layout>
+            <Stack justifyContent="center" alignItems="center">
+                <CircularProgress />
+            </Stack>
+        </Layout>
+    );
+
+    if (productStatus === 'loading' || !listProduct?.data) {
+        return renderLoading;
     }
 
+    if (categoryStatus === 'loading' || !listCategory) {
+        return renderLoading;
+    }
+
+    const handleItemClick = (categoryId: string) => {
+        navigate(`/categories/${categoryId}/products`);
+    };
     // status === 'success' and listProduct.data has data
     return (
         <>
             <Layout sx={{ mt: 4 }}>
+                <ListCategory categories={listCategory} handleItemClick={handleItemClick} />
                 <Stack alignItems={'flex-end'} spacing={3}>
                     <TableProduct rows={listProduct.data} />
                     <Pagination

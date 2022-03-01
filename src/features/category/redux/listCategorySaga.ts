@@ -5,10 +5,7 @@ import { fetchListCategory, fetchListCategoryFailed, fetchListCategorySuccess } 
 
 function* listCategory() {
     try {
-        console.log(12321);
-
         const response: Category[] = yield call(getListCategory);
-        console.log(response);
 
         yield put(fetchListCategorySuccess(response));
     } catch (error) {
