@@ -21,7 +21,7 @@ const pages = [
     },
     {
         name: 'Category',
-        to: '/category',
+        to: '/categories',
     },
 ];
 

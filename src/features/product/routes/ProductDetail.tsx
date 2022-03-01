@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Grid, Stack, Typography, CircularProgress, Alert } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import Layout from '../components/Layout';
+import Layout from '../../../components/Layout';
 import { formatToVND } from '../../../utils';
 import ListImage from '../components/ListImage';
 import { fetchListProductDetail } from '../redux/productSlice';
