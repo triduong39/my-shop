@@ -15,6 +15,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import { Product } from '../types';
 import { Link } from 'react-router-dom';
+import AppDialog from './AppDialog';
 
 const AppTypography = styled(Typography)`
     overflow: hidden;
@@ -32,9 +33,10 @@ const AppImg = styled('img')`
 
 type TableProductProps = {
     rows: Product[];
+    handleDeleteProduct: (id: number) => void;
 };
 
-export default function TableProduct({ rows }: TableProductProps) {
+export default function TableProduct({ rows, handleDeleteProduct }: TableProductProps) {
     return (
         <TableContainer component={Paper} elevation={8}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -74,11 +76,16 @@ export default function TableProduct({ rows }: TableProductProps) {
                                             <CreateIcon />
                                         </IconButton>
                                     </Link>
-                                    <Link to={`/products/delete/${row.id}`}>
-                                        <IconButton aria-label="delete" color="error">
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </Link>
+                                    <AppDialog
+                                        title="Delete product"
+                                        content="Are you sure to delete this product?"
+                                        handleSubmit={() => handleDeleteProduct(row.id)}
+                                        itemOpenDialog={
+                                            <IconButton aria-label="delete" color="error">
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        }
+                                    />
                                 </Stack>
                             </TableCell>
                         </TableRow>

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ResponseListProduct, ProductState, listProductParams, Product, UpdateProductProps } from '../types';
+import { ResponseListProduct, ProductState, listProductRoute, Product, UpdateProductProps } from '../types';
 
 // Define the initial state using that type
 const initialState: ProductState = {
@@ -11,7 +11,7 @@ const initialState: ProductState = {
 };
 
 const listProductReducer = {
-    fetchListProduct: (state: ProductState, _action: PayloadAction<listProductParams>) => {
+    fetchListProduct: (state: ProductState, _action: PayloadAction<listProductRoute>) => {
         state.status = 'loading';
         state.error = undefined;
     },

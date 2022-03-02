@@ -30,22 +30,10 @@ export type ProductState = {
     error?: string;
 };
 
-export type listProductParams = {
-    categoryId: string;
-    _page: number;
-    _limit: number;
-};
-
 export type listProductRoute = {
-    category?: string;
+    categoryId?: string;
     _page?: string;
     _limit?: string;
-};
-
-export type CategoryProductsPagination = {
-    categoryId: string;
-    _page: number;
-    _limit: number;
 };
 
 export type ResponseListProduct = {
@@ -61,10 +49,16 @@ export type UpdateProductProps = {
     id?: number;
     name?: string;
     shortDescription?: string;
-    description?: string;
     originalPrice?: number;
     salePrice?: number;
     images?: string[];
-    isFreeShip?: false;
     categoryId?: string;
+};
+
+export type onSubmitProductFormProps = {
+    name: string;
+    images: string[];
+    originalPrice: number;
+    salePrice: number;
+    shortDescription: string;
 };
