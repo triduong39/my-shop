@@ -25,7 +25,7 @@ const schema = yup.object().shape({
     shortDescription: yup.string().required(),
 });
 
-export default function EditProduct() {
+export default function UpdateProduct() {
     const { id } = useParams();
     const dispatch = useAppDispatch();
 

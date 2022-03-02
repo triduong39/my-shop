@@ -34,7 +34,7 @@ const getParamsFC = (categoryId: string | null, _page: string | null, _limit: st
     return params;
 };
 
-export default function Products() {
+export default function ListProduct() {
     const dispatch = useAppDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
 
