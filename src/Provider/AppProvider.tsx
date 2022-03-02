@@ -1,8 +1,9 @@
 import { CircularProgress, createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material';
 import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { store } from '../app/store';
+import CustomRouter from '../routes/CustomRouter';
+import { history } from '../utils/history';
 import AuthProvider from './AuthProvider';
 
 type AppProviderProps = {
@@ -17,7 +18,7 @@ export default function AppProvider({ children }: AppProviderProps) {
             <Provider store={store}>
                 <ThemeProvider theme={theme}>
                     <AuthProvider>
-                        <BrowserRouter>{children}</BrowserRouter>
+                        <CustomRouter history={history}>{children}</CustomRouter>
                     </AuthProvider>
                 </ThemeProvider>
             </Provider>

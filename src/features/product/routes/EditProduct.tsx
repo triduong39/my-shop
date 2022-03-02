@@ -34,6 +34,7 @@ export default function EditProduct() {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm<onSubmitProps>({
         resolver: yupResolver(schema),
@@ -44,6 +45,11 @@ export default function EditProduct() {
             dispatch(fetchListProductDetail(id));
         }
     }, []);
+
+    useEffect(() => {
+        // reset form
+        reset();
+    }, [productDetail]);
 
     if (status === 'error' && error) {
         return <Alert severity="error">{error}</Alert>;
