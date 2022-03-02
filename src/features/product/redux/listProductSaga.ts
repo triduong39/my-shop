@@ -1,10 +1,10 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { getListProduct } from '../api/getListProduct';
-import { listProductParams, ResponseListProduct } from '../types';
+import { listProductRoute, ResponseListProduct } from '../types';
 import { fetchListProduct, fetchListProductSuccess, fetchListProductFailed } from './productSlice';
 
-function* listProduct(action: PayloadAction<listProductParams>) {
+function* listProduct(action: PayloadAction<listProductRoute>) {
     try {
         const response: ResponseListProduct = yield call(getListProduct, action.payload);
         yield put(fetchListProductSuccess(response));
