@@ -54,3 +54,11 @@ export type UpdateProductProps = {
     images?: string[];
     categoryId?: string;
 };
+
+export type onSubmitProductFormProps = {
+    name: string;
+    images: string[];
+    originalPrice: number;
+    salePrice: number;
+    shortDescription: string;
+};
