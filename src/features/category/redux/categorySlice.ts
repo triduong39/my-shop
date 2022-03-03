@@ -55,6 +55,21 @@ const updateCategoryReducer = {
     },
 };
 
+const deleteCategoryReducer = {
+    deleteCategory: (state: CategoryState, _action: PayloadAction<string>) => {
+        state.status = 'loading';
+        state.error = undefined;
+    },
+    deleteCategorySuccess: (state: CategoryState, _action: PayloadAction<Category>) => {
+        state.status = 'success';
+        state.error = undefined;
+    },
+    deleteCategoryFailed: (state: CategoryState, action: PayloadAction<string>) => {
+        state.status = 'error';
+        state.error = action.payload;
+    },
+};
+
 export const categorySlice = createSlice({
     name: 'category',
     initialState,
@@ -62,6 +77,7 @@ export const categorySlice = createSlice({
         ...listCategoryReducer,
         ...createCategoryReducer,
         ...updateCategoryReducer,
+        ...deleteCategoryReducer,
     },
 });
 
@@ -77,6 +93,10 @@ export const {
     updateCategory,
     updateCategorySuccess,
     updateCategoryFailed,
+
+    deleteCategory,
+    deleteCategorySuccess,
+    deleteCategoryFailed,
 } = categorySlice.actions;
 
 const categoryReducer = categorySlice.reducer;

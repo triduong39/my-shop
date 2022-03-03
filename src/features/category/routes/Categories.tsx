@@ -4,7 +4,7 @@ import Layout from '../../../components/Layout';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import TableCategory from '../components/TableCategory';
-import { fetchListCategory } from '../redux/categorySlice';
+import { deleteCategory, fetchListCategory } from '../redux/categorySlice';
 import { NavLink } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
@@ -33,6 +33,9 @@ export default function Categories() {
         );
     }
 
+    const handleDeleteCategory = (id: string) => {
+        dispatch(deleteCategory(id));
+    };
     // status === 'success' and listProduct.data has data
     return (
         <Layout sx={{ mt: 4 }} maxWidth="md">
@@ -43,7 +46,7 @@ export default function Categories() {
                     </Button>
                 </NavLink>
             </Stack>
-            <TableCategory rows={listCategory} />
+            <TableCategory handleDeleteCategory={handleDeleteCategory} rows={listCategory} />
         </Layout>
     );
 }
