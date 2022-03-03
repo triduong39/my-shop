@@ -63,6 +63,7 @@ export type FormProductProps = {
 export type onSubmitProductFormProps = {
     name: string;
     images: string[];
+    categoryId: string;
     originalPrice: number;
     salePrice: number;
     shortDescription: string;

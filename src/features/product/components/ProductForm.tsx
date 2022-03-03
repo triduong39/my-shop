@@ -1,6 +1,18 @@
 import React from 'react';
-import { Autocomplete, Box, Button, Chip, IconButton, Paper, Stack, TextField, Typography } from '@mui/material';
-import { FormProductProps, onSubmitProductFormProps, Product } from '../types';
+import {
+    Autocomplete,
+    Box,
+    Button,
+    Chip,
+    IconButton,
+    MenuItem,
+    Paper,
+    Select,
+    Stack,
+    TextField,
+    Typography,
+} from '@mui/material';
+import { Category, FormProductProps, onSubmitProductFormProps, Product } from '../types';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,7 +23,8 @@ import { Link } from 'react-router-dom';
 const schema = yup.object().shape({
     name: yup.string().required(),
     images: yup.array().of(yup.string().required()).min(1),
-    originalPrice: yup.number().required(),
+    categoryId: yup.string().required(),
+    originalPrice: yup.number().required().min(10000),
     salePrice: yup.number().required().max(yup.ref('originalPrice'), 'Cannot bigger than originalPrice'),
     shortDescription: yup.string().required(),
 });
@@ -20,6 +33,7 @@ type ProductFormProps = {
     title: string;
     buttonText: string;
     defaultValue?: Product;
+    categoryData: Category[];
     handleSubmit: (data: onSubmitProductFormProps) => void;
 };
 
@@ -27,11 +41,13 @@ export default function ProductForm({
     title,
     buttonText,
     defaultValue,
+    categoryData,
     handleSubmit: handleFormSubmit,
 }: ProductFormProps) {
     let defaultValueDTO: FormProductProps = {
         name: '',
         images: [],
+        categoryId: categoryData[0].id,
         originalPrice: 0,
         salePrice: 0,
         shortDescription: '',
@@ -40,6 +56,7 @@ export default function ProductForm({
         defaultValueDTO = {
             name: defaultValue.name,
             images: defaultValue.images,
+            categoryId: categoryData[0].id,
             originalPrice: defaultValue.originalPrice,
             salePrice: defaultValue.salePrice,
             shortDescription: defaultValue.shortDescription,
@@ -98,6 +115,27 @@ export default function ProductForm({
                     />
 
                     <Controller
+                        name="categoryId"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                            <Select
+                                {...field}
+                                label="Category"
+                                onChange={(e) => setValue('categoryId', e.target.value)}
+                            >
+                                {categoryData.map((item) => {
+                                    return (
+                                        <MenuItem key={item.id} value={item.id}>
+                                            {item.name}
+                                        </MenuItem>
+                                    );
+                                })}
+                            </Select>
+                        )}
+                    />
+
+                    <Controller
                         name="images"
                         control={control}
                         rules={{ required: true }}
@@ -125,7 +163,6 @@ export default function ProductForm({
                                     <TextField
                                         {...params}
                                         label="Images"
-                                        placeholder="Favorites"
                                         error={Boolean(errors.images)}
                                         helperText={errors.images && 'Images must contain at least 1!'}
                                     />

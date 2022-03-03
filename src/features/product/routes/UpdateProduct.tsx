@@ -8,30 +8,42 @@ import { useAppSelector } from '../../../hooks/useAppSelector';
 
 import ProductForm from '../components/ProductForm';
 import { onSubmitProductFormProps } from '../types';
+import { fetchListCategory } from '../../category/redux/categorySlice';
 
 export default function UpdateProduct() {
     const { id } = useParams();
     const dispatch = useAppDispatch();
-    const { productDetail, status, error } = useAppSelector((state) => state.product);
+    const { productDetail, status: productStatus, error: productError } = useAppSelector((state) => state.product);
+    const { listCategory, status: categoryStatus, error: categoryError } = useAppSelector((state) => state.category);
 
     useEffect(() => {
+        dispatch(fetchListCategory());
         if (id) {
             dispatch(fetchListProductDetail(id));
         }
     }, []);
 
-    if (status === 'error' && error) {
-        return <Alert severity="error">{error}</Alert>;
+    if (productStatus === 'error' && productError) {
+        return <Alert severity="error">{productError}</Alert>;
+    }
+    if (categoryStatus === 'error' && categoryError) {
+        return <Alert severity="error">{categoryError}</Alert>;
     }
 
-    if (status === 'loading' || !productDetail) {
-        return (
-            <Layout>
-                <Stack justifyContent="center" alignItems="center">
-                    <CircularProgress />
-                </Stack>
-            </Layout>
-        );
+    const renderLoading = (
+        <Layout>
+            <Stack justifyContent="center" alignItems="center">
+                <CircularProgress />
+            </Stack>
+        </Layout>
+    );
+
+    if (productStatus === 'loading' || !productDetail) {
+        return renderLoading;
+    }
+
+    if (categoryStatus === 'loading' || !listCategory) {
+        return renderLoading;
     }
 
     const handleSubmit = (data: onSubmitProductFormProps) => {
@@ -43,6 +55,7 @@ export default function UpdateProduct() {
             <ProductForm
                 title="Update product"
                 buttonText="Update"
+                categoryData={listCategory}
                 defaultValue={productDetail}
                 handleSubmit={handleSubmit}
             />
