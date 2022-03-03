@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
-import { Alert, CircularProgress, Stack } from '@mui/material';
+import { Alert, Button, CircularProgress, Stack } from '@mui/material';
 import Layout from '../../../components/Layout';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import TableCategory from '../components/TableCategory';
 import { fetchListCategory } from '../redux/categorySlice';
+import { NavLink } from 'react-router-dom';
+
+import AddIcon from '@mui/icons-material/Add';
 
 export default function Categories() {
     const dispatch = useAppDispatch();
@@ -32,12 +35,15 @@ export default function Categories() {
 
     // status === 'success' and listProduct.data has data
     return (
-        <>
-            <Layout sx={{ mt: 4 }} maxWidth="md">
-                <Stack alignItems={'flex-end'} spacing={3}>
-                    <TableCategory rows={listCategory} />
-                </Stack>
-            </Layout>
-        </>
+        <Layout sx={{ mt: 4 }} maxWidth="md">
+            <Stack direction={'row'} justifyContent="end" spacing={3} sx={{ mb: 2 }}>
+                <NavLink to={'/categories/create'} style={{ textDecoration: 'none' }}>
+                    <Button variant="contained" color="success" endIcon={<AddIcon />}>
+                        Create
+                    </Button>
+                </NavLink>
+            </Stack>
+            <TableCategory rows={listCategory} />
+        </Layout>
     );
 }

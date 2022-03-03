@@ -13,7 +13,7 @@ export default function CreateCategory() {
     };
 
     return (
-        <Layout maxWidth="md">
+        <Layout maxWidth="sm">
             <CategoryForm title="Create category" buttonText="Create" handleSubmit={handleSubmit} />
         </Layout>
     );
