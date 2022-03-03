@@ -47,6 +47,11 @@ export type ResponseListProduct = {
 
 export type UpdateProductProps = {
     id?: number;
+} & FormProductProps;
+
+export type CreateProductProps = FormProductProps;
+
+export type FormProductProps = {
     name?: string;
     shortDescription?: string;
     originalPrice?: number;
@@ -58,6 +63,7 @@ export type UpdateProductProps = {
 export type onSubmitProductFormProps = {
     name: string;
     images: string[];
+    categoryId: string;
     originalPrice: number;
     salePrice: number;
     shortDescription: string;
