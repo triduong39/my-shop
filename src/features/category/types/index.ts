@@ -13,6 +13,10 @@ export type SubmitCategoryFormType = {
     name: string;
 };
 
+export type UpdateCategoryAction = {
+    id?: string;
+} & CategoryFormType;
+
 export type CreateCategoryAction = CategoryFormType;
 
 export type CategoryFormType = {

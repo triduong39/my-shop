@@ -9,6 +9,7 @@ const UpdateProduct = React.lazy(() => import('../features/product/routes/Update
 
 const Categories = React.lazy(() => import('../features/category/routes/Categories'));
 const CreateCategory = React.lazy(() => import('../features/category/routes/CreateCategory'));
+const UpdateCategory = React.lazy(() => import('../features/category/routes/UpdateCategory'));
 
 const NotFound = React.lazy(() => import('./NotFound'));
 
@@ -24,6 +25,7 @@ export default function ProtectedRoutes() {
 
                 <Route path="categories/" element={<Categories />} />
                 <Route path="categories/create" element={<CreateCategory />} />
+                <Route path="categories/edit/:id" element={<UpdateCategory />} />
 
                 <Route path="/" element={<ListProduct />} />
                 <Route path="*" element={<NotFound />} />

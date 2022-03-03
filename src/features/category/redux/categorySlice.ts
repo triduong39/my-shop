@@ -1,6 +1,5 @@
-import { CreateCategoryAction } from '../types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Category, CategoryState } from '../types';
+import { Category, CategoryState, CreateCategoryAction, UpdateCategoryAction } from '../types';
 
 // Define the initial state using that type
 const initialState: CategoryState = {
@@ -41,12 +40,28 @@ const createCategoryReducer = {
     },
 };
 
+const updateCategoryReducer = {
+    updateCategory: (state: CategoryState, _action: PayloadAction<UpdateCategoryAction>) => {
+        state.status = 'loading';
+        state.error = undefined;
+    },
+    updateCategorySuccess: (state: CategoryState, _action: PayloadAction<Category>) => {
+        state.status = 'success';
+        state.error = undefined;
+    },
+    updateCategoryFailed: (state: CategoryState, action: PayloadAction<string>) => {
+        state.status = 'error';
+        state.error = action.payload;
+    },
+};
+
 export const categorySlice = createSlice({
     name: 'category',
     initialState,
     reducers: {
         ...listCategoryReducer,
         ...createCategoryReducer,
+        ...updateCategoryReducer,
     },
 });
 
@@ -58,6 +73,10 @@ export const {
     createCategory,
     createCategorySuccess,
     createCategoryFailed,
+
+    updateCategory,
+    updateCategorySuccess,
+    updateCategoryFailed,
 } = categorySlice.actions;
 
 const categoryReducer = categorySlice.reducer;

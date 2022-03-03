@@ -1,9 +1,9 @@
 import React from 'react';
 import Layout from '../../../components/Layout';
-import { createCategory } from '../redux/categorySlice';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
-import { SubmitCategoryFormType } from '../types';
 import CategoryForm from '../components/CategoryForm';
+import { createCategory } from '../redux/categorySlice';
+import { SubmitCategoryFormType } from '../types';
 
 export default function CreateCategory() {
     const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ export default function CreateCategory() {
 
     return (
         <Layout maxWidth="md">
-            <CategoryForm title="Create product" buttonText="Create" handleSubmit={handleSubmit} />
+            <CategoryForm title="Create category" buttonText="Create" handleSubmit={handleSubmit} />
         </Layout>
     );
 }

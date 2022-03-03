@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Button, IconButton, Paper, Stack, TextField, Typography } from '@mui/material';
-import { Category, CategoryFormType, SubmitCategoryFormType } from '../types';
+import { CategoryFormType, SubmitCategoryFormType } from '../types';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -14,7 +14,7 @@ const schema = yup.object().shape({
 type CategoryFormProps = {
     title: string;
     buttonText: string;
-    defaultValue?: Category;
+    defaultValue?: CategoryFormType;
     handleSubmit: (data: SubmitCategoryFormType) => void;
 };
 
