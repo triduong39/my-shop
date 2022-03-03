@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ResponseListProduct, ProductState, listProductRoute, Product, UpdateProductProps } from '../types';
+import {
+    ResponseListProduct,
+    ProductState,
+    listProductRoute,
+    Product,
+    UpdateProductProps,
+    CreateProductProps,
+} from '../types';
 
 // Define the initial state using that type
 const initialState: ProductState = {
@@ -49,7 +56,7 @@ const productDetailReducer = {
     },
 };
 
-const updateProductsReducer = {
+const updateProductReducer = {
     updateProduct: (state: ProductState, _action: PayloadAction<UpdateProductProps>) => {
         state.status = 'loading';
         state.error = undefined;
@@ -64,7 +71,7 @@ const updateProductsReducer = {
     },
 };
 
-const deleteProductsReducer = {
+const deleteProductReducer = {
     deleteProduct: (state: ProductState, _action: PayloadAction<string>) => {
         state.status = 'loading';
         state.error = undefined;
@@ -79,14 +86,30 @@ const deleteProductsReducer = {
     },
 };
 
+const createProductReducer = {
+    createProduct: (state: ProductState, _action: PayloadAction<CreateProductProps>) => {
+        state.status = 'loading';
+        state.error = undefined;
+    },
+    createProductSuccess: (state: ProductState, _action: PayloadAction<Product>) => {
+        state.status = 'success';
+        state.error = undefined;
+    },
+    createProductFailed: (state: ProductState, action: PayloadAction<string>) => {
+        state.status = 'error';
+        state.error = action.payload;
+    },
+};
+
 export const productSlice = createSlice({
     name: 'product',
     initialState,
     reducers: {
         ...listProductReducer,
         ...productDetailReducer,
-        ...updateProductsReducer,
-        ...deleteProductsReducer,
+        ...updateProductReducer,
+        ...deleteProductReducer,
+        ...createProductReducer,
     },
 });
 
@@ -106,6 +129,10 @@ export const {
     deleteProduct,
     deleteProductSuccess,
     deleteProductFailed,
+
+    createProduct,
+    createProductSuccess,
+    createProductFailed,
 } = productSlice.actions;
 
 const productReducer = productSlice.reducer;

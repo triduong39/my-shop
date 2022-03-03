@@ -4,6 +4,7 @@ import ResponsiveAppBar from '../components/ResponsiveAppBar';
 
 const ListProduct = React.lazy(() => import('../features/product/routes/ListProduct'));
 const ProductDetail = React.lazy(() => import('../features/product/routes/ProductDetail'));
+const CreateProduct = React.lazy(() => import('../features/product/routes/CreateProduct'));
 const UpdateProduct = React.lazy(() => import('../features/product/routes/UpdateProduct'));
 const Categories = React.lazy(() => import('../features/category/routes/Categories'));
 const NotFound = React.lazy(() => import('./NotFound'));
@@ -15,6 +16,7 @@ export default function ProtectedRoutes() {
             <Routes>
                 <Route path="products" element={<ListProduct />} />
                 <Route path="products/:id" element={<ProductDetail />} />
+                <Route path="products/create" element={<CreateProduct />} />
                 <Route path="products/edit/:id" element={<UpdateProduct />} />
 
                 <Route path="categories/" element={<Categories />} />

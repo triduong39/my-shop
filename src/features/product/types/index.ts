@@ -47,6 +47,11 @@ export type ResponseListProduct = {
 
 export type UpdateProductProps = {
     id?: number;
+} & FormProductProps;
+
+export type CreateProductProps = FormProductProps;
+
+export type FormProductProps = {
     name?: string;
     shortDescription?: string;
     originalPrice?: number;

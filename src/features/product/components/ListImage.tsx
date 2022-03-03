@@ -40,7 +40,7 @@ type ListImageProps = {
 export default function ListImage({
     size = 'md',
     hover = true,
-    images,
+    images = [],
     imageSelected,
     handleItemClick,
 }: ListImageProps) {

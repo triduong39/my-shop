@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
-import { Alert, CircularProgress, Pagination, Stack } from '@mui/material';
+import { Alert, Button, CircularProgress, Pagination, Stack } from '@mui/material';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { deleteProduct, fetchListProduct } from '../redux/productSlice';
-import { useSearchParams } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import { DEFAULT_FETCH_LIMIT } from '../../../config';
 import TableProduct from '../components/TableProduct';
 import Layout from '../../../components/Layout';
 import { fetchListCategory } from '../../category/redux/categorySlice';
 import ListCategory from '../components/ListCategory';
 import { listProductRoute } from '../types';
+import AddIcon from '@mui/icons-material/Add';
 
 const getParamsFC = (categoryId: string | null, _page: string | null, _limit: string | null) => {
     let params: listProductRoute = {};
@@ -97,7 +98,14 @@ export default function ListProduct() {
     return (
         <>
             <Layout sx={{ mt: 4 }}>
-                <ListCategory categories={listCategory} handleItemClick={handleItemClick} />
+                <Stack direction={'row'} justifyContent="space-between" spacing={3}>
+                    <ListCategory categories={listCategory} handleItemClick={handleItemClick} />
+                    <NavLink to={'/products/create'} style={{ textDecoration: 'none' }}>
+                        <Button variant="contained" color="success" endIcon={<AddIcon />}>
+                            Create
+                        </Button>
+                    </NavLink>
+                </Stack>
                 <Stack alignItems={'flex-end'} spacing={3}>
                     <TableProduct rows={listProduct.data} handleDeleteProduct={handleDeleteProduct} />
                     <Pagination

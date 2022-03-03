@@ -40,7 +40,12 @@ export default function UpdateProduct() {
 
     return (
         <Layout maxWidth="md">
-            <ProductForm defaultValue={productDetail} handleSubmit={handleSubmit} />
+            <ProductForm
+                title="Update product"
+                buttonText="Update"
+                defaultValue={productDetail}
+                handleSubmit={handleSubmit}
+            />
         </Layout>
     );
 }
