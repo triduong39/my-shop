@@ -8,3 +8,17 @@ export type CategoryState = {
     listCategory?: Category[];
     error?: string;
 };
+
+export type SubmitCategoryFormType = {
+    name: string;
+};
+
+export type UpdateCategoryAction = {
+    id?: string;
+} & CategoryFormType;
+
+export type CreateCategoryAction = CategoryFormType;
+
+export type CategoryFormType = {
+    name?: string;
+};
