@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import NotFound from './NotFound';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 const Login = React.lazy(() => import('../features/auth/routes/Login'));
 const Register = React.lazy(() => import('../features/auth/routes/Register'));
@@ -11,7 +10,7 @@ export default function PublicRoutes() {
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route path="/" element={<Login />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<Navigate replace to="/login" />} />
         </Routes>
     );
 }

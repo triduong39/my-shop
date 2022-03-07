@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import ResponsiveAppBar from '../components/ResponsiveAppBar';
 
 const ListProduct = React.lazy(() => import('../features/product/routes/ListProduct'));
@@ -10,8 +10,6 @@ const UpdateProduct = React.lazy(() => import('../features/product/routes/Update
 const Categories = React.lazy(() => import('../features/category/routes/Categories'));
 const CreateCategory = React.lazy(() => import('../features/category/routes/CreateCategory'));
 const UpdateCategory = React.lazy(() => import('../features/category/routes/UpdateCategory'));
-
-const NotFound = React.lazy(() => import('./NotFound'));
 
 export default function ProtectedRoutes() {
     return (
@@ -28,7 +26,7 @@ export default function ProtectedRoutes() {
                 <Route path="categories/edit/:id" element={<UpdateCategory />} />
 
                 <Route path="/" element={<ListProduct />} />
-                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<Navigate replace to="/products" />} />
             </Routes>
         </>
     );
